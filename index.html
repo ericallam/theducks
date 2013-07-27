@@ -1,11 +1,52 @@
 <!doctype html>
 <head>
   <title>DUCK STATUS</title>
-  <style>
-  </style>
+  <script type='text/javascript' src='javascripts/jquery.js'></script>
+  <script type='text/javascript' src='https://cdn.firebase.com/v0/firebase.js'></script>
 </head>
 <body>
-<img src="images/duck-right.jpg" />
-<img src="images/duck-left.jpg" />
+<img id=duck-right src="images/duck-right.jpg" />
+<img id=duck-left src="images/duck-left.jpg" />
+<div style="clear: both;">
+<button id="switch">Toggle Happiness</button>
+</div>
+
+<script type="text/javascript">
+  window.state = {state: "happy"};
+  var myRootRef = new Firebase('https://theduckstatus.firebaseIO.com/');
+
+  myRootRef.on('value', function(snapshot){
+    window.state = snapshot.val();
+
+    if(window.state.state === "happy"){
+      $('#duck-left').attr('src', 'images/duck-left.jpg');
+      $('#duck-right').attr('src', 'images/duck-right.jpg');
+    }else{
+      $('#duck-left').attr('src', 'images/duck-right.jpg');
+      $('#duck-right').attr('src', 'images/duck-left.jpg');
+    }
+  })
+
+
+  $(function(){
+    $('#switch').click(function(e){
+      e.preventDefault();
+
+      if (window.state.state === "happy"){
+        myRootRef.set({state: "bummed"});
+      }else{
+        myRootRef.set({state: "happy"});
+      }
+
+      // var duckLeftImage = $('#duck-left').attr('src');
+      // var duckRightImage = $('#duck-right').attr('src');
+
+      // $('#duck-left').attr('src', duckRightImage);
+      // $('#duck-right').attr('src', duckLeftImage);
+
+
+    });
+  });
+</script>
 </body>
 </html>
