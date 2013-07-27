@@ -8,7 +8,8 @@
 <img id=duck-right src="images/duck-right.jpg" />
 <img id=duck-left src="images/duck-left.jpg" />
 <div style="clear: both;">
-<button id="switch">Change the Ducks</button>
+<button id="happy-button">Happy Time &lt;3</button>
+<button id="bummer-button">Sad Time :(</button>
 </div>
 
 <script type="text/javascript">
@@ -29,22 +30,16 @@
 
 
   $(function(){
-    $('#switch').click(function(e){
+    $('#happy-button').click(function(e){
       e.preventDefault();
 
-      if (window.state.state === "happy"){
-        myRootRef.set({state: "bummed"});
-      }else{
-        myRootRef.set({state: "happy"});
-      }
+      myRootRef.set({state: "happy"});
+    });
 
-      // var duckLeftImage = $('#duck-left').attr('src');
-      // var duckRightImage = $('#duck-right').attr('src');
+    $('#bummer-button').click(function(e){
+      e.preventDefault();
 
-      // $('#duck-left').attr('src', duckRightImage);
-      // $('#duck-right').attr('src', duckLeftImage);
-
-
+      myRootRef.set({state: "bummed"});
     });
   });
 </script>
